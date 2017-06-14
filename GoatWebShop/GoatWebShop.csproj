@@ -201,7 +201,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AspNetRolesController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\CustomerDetailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -225,10 +227,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>GoatWebShopModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Customer.cs">
-      <DependentUpon>GoatWebShopModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\C__MigrationHistory.cs">
+    <Compile Include="Models\CustomerDetail.cs">
       <DependentUpon>GoatWebShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GoatWebShopModel.Context.cs">
@@ -254,13 +253,13 @@
     <Compile Include="Models\OrderRow.cs">
       <DependentUpon>GoatWebShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderStatu.cs">
+      <DependentUpon>GoatWebShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Product.cs">
       <DependentUpon>GoatWebShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Supplier.cs">
-      <DependentUpon>GoatWebShopModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>GoatWebShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -355,6 +354,16 @@
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\AspNetRoles\Create.cshtml" />
+    <Content Include="Views\AspNetRoles\Delete.cshtml" />
+    <Content Include="Views\AspNetRoles\Details.cshtml" />
+    <Content Include="Views\AspNetRoles\Edit.cshtml" />
+    <Content Include="Views\AspNetRoles\Index.cshtml" />
+    <Content Include="Views\CustomerDetails\Create.cshtml" />
+    <Content Include="Views\CustomerDetails\Delete.cshtml" />
+    <Content Include="Views\CustomerDetails\Details.cshtml" />
+    <Content Include="Views\CustomerDetails\Edit.cshtml" />
+    <Content Include="Views\CustomerDetails\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

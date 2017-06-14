@@ -5,26 +5,27 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="2080ef7bd1ff446e8e091ad67b4faaef" Name="Diagram1">
-        <EntityTypeShape EntityType="ShopModel.C__MigrationHistory" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShopModel.AspNetRole" Width="1.5" PointX="5.75" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShopModel.AspNetUserClaim" Width="1.5" PointX="10.25" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShopModel.AspNetUserLogin" Width="1.5" PointX="10.25" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShopModel.AspNetUser" Width="1.5" PointX="8" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShopModel.Category" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShopModel.Customer" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShopModel.Order" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShopModel.OrderRow" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShopModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShopModel.Supplier" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShopModel.sysdiagram" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="ShopModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="ShopModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="ShopModel.FK_Product_Category" ManuallyRouted="false" />
-        <AssociationConnector Association="ShopModel.FK_Order_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="ShopModel.FK_OrderRow_Order" ManuallyRouted="false" />
-        <AssociationConnector Association="ShopModel.FK_OrderRow_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="ShopModel.FK_Product_Supplier" ManuallyRouted="false" />
-        <AssociationConnector Association="ShopModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ShopModel.AspNetRole" Width="1.5" PointX="0.75" PointY="6" />
+        <EntityTypeShape EntityType="ShopModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="3" />
+        <EntityTypeShape EntityType="ShopModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="5.75" />
+        <EntityTypeShape EntityType="ShopModel.AspNetUser" Width="1.5" PointX="3" PointY="4.75" />
+        <EntityTypeShape EntityType="ShopModel.Category" Width="1.5" PointX="6" PointY="18.375" />
+        <EntityTypeShape EntityType="ShopModel.CustomerDetail" Width="1.5" PointX="5.25" PointY="11.625" />
+        <EntityTypeShape EntityType="ShopModel.Order" Width="1.5" PointX="8.25" PointY="5.625" />
+        <EntityTypeShape EntityType="ShopModel.OrderRow" Width="1.5" PointX="10.5" PointY="5.75" />
+        <EntityTypeShape EntityType="ShopModel.OrderStatu" Width="1.5" PointX="6" PointY="9" />
+        <EntityTypeShape EntityType="ShopModel.Product" Width="1.5" PointX="8.25" PointY="16.125" />
+        <EntityTypeShape EntityType="ShopModel.Supplier" Width="1.5" PointX="6" PointY="15.625" />
+        <AssociationConnector Association="ShopModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="ShopModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="ShopModel.FK_CustomerDetails_AspNetUsers" />
+        <AssociationConnector Association="ShopModel.FK_Order_AspNetUsers" />
+        <AssociationConnector Association="ShopModel.FK_Product_Category" />
+        <AssociationConnector Association="ShopModel.FK_Order_OrderStatus" />
+        <AssociationConnector Association="ShopModel.FK_OrderRow_Order" />
+        <AssociationConnector Association="ShopModel.FK_OrderRow_Product" />
+        <AssociationConnector Association="ShopModel.FK_Product_Supplier" />
+        <AssociationConnector Association="ShopModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

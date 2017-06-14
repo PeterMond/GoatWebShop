@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,31 @@ namespace GoatWebShop.Controllers
             ViewBag.UserId = User.Identity.GetUserId();
 
             ViewBag.UserName = User.Identity.GetUserName();
+
+            var UserManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+
+            var persoon = UserManager.FindByEmail("test@test.nl");
+            ViewBag.UserName2 = persoon.UserName;
+
+            if (persoon.Roles.Any())
+            {
+                ViewBag.UserRole = persoon.Roles.First();
+            }
+            
+
+            var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>());
+            string[] roleNames = { "Admin", "Member", "Moderator", "Junior", "Senior", "Customer" };
+            IdentityResult roleResult;
+            foreach (var roleName in roleNames)
+            {
+                if (!RoleManager.RoleExists(roleName))
+                {
+                    roleResult = RoleManager.Create(new IdentityRole(roleName));
+                }
+            }
+
+  
+
 
             return View();
         }

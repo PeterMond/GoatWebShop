@@ -12,23 +12,18 @@ namespace GoatWebShop.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Order
+    public partial class OrderStatu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Order()
+        public OrderStatu()
         {
-            this.OrderRows = new HashSet<OrderRow>();
+            this.Orders = new HashSet<Order>();
         }
     
-        public int ID { get; set; }
-        public string OrderNumber { get; set; }
-        public System.DateTime Created { get; set; }
-        public int OrderStatus_id { get; set; }
-        public string UserId { get; set; }
+        public int Id { get; set; }
+        public string Status { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual OrderStatu OrderStatu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderRow> OrderRows { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }
