@@ -137,9 +137,8 @@ namespace GoatWebShop.Controllers
             {
                 ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", customerDetail.UserId);
             }
-            
-            //return View(customerDetail);
 
+            Session["CustomerId"] = id;
 
             // check if the user is authorised to view this page
             if (customerDetail.UserId == User.Identity.GetUserId() || IsAdmin())
@@ -156,6 +155,11 @@ namespace GoatWebShop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,UserId,FirstName,LastName,Birthday,Adress")] CustomerDetail customerDetail)
         {
+            // check if the user tries to edit someone elses customerdetails
+            if (customerDetail.ID != ((int)Session["CustomerId"]))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             if (ModelState.IsValid)
             {
                 if (customerDetail.UserId == null)

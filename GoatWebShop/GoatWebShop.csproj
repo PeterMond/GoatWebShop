@@ -263,6 +263,7 @@
       <DependentUpon>GoatWebShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PartialClasses\CustomerDetail.Partial.cs" />
+    <Compile Include="PartialClasses\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
