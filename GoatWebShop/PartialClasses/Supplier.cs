@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using GoatWebShop.Models;
+using Newtonsoft.Json;
 
 namespace GoatWebShop.Models
 {
@@ -24,6 +25,9 @@ namespace GoatWebShop.Models
         [Required]
         [Display(Name = "Address")]
         public int Adress { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<Product> Products { get; set; }
 
     }
 }

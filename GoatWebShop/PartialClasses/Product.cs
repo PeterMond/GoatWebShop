@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace GoatWebShop.Models
 {
@@ -36,16 +37,15 @@ namespace GoatWebShop.Models
         [Display(Name = "Category")]
         public int Category_ID { get; set; }
 
-        public virtual Category Category { get; set; }
-
         [Required]
         [Display(Name = "Supplier")]
         public int Supplier_ID { get; set; }
 
-        public virtual Supplier Supplier { get; set; }
-
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public System.DateTime Deleted { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<OrderRow> OrderRows { get; set; }
 
     }
 
