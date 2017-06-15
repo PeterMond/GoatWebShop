@@ -9,13 +9,13 @@
         <EntityTypeShape EntityType="ShopModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="3" />
         <EntityTypeShape EntityType="ShopModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="5.75" />
         <EntityTypeShape EntityType="ShopModel.AspNetUser" Width="1.5" PointX="3" PointY="4.75" />
-        <EntityTypeShape EntityType="ShopModel.Category" Width="1.5" PointX="6" PointY="18.375" />
+        <EntityTypeShape EntityType="ShopModel.Category" Width="1.5" PointX="6" PointY="15.625" />
         <EntityTypeShape EntityType="ShopModel.CustomerDetail" Width="1.5" PointX="5.25" PointY="11.625" />
         <EntityTypeShape EntityType="ShopModel.Order" Width="1.5" PointX="8.25" PointY="5.625" />
         <EntityTypeShape EntityType="ShopModel.OrderRow" Width="1.5" PointX="10.5" PointY="5.75" />
         <EntityTypeShape EntityType="ShopModel.OrderStatu" Width="1.5" PointX="6" PointY="9" />
         <EntityTypeShape EntityType="ShopModel.Product" Width="1.5" PointX="8.25" PointY="16.125" />
-        <EntityTypeShape EntityType="ShopModel.Supplier" Width="1.5" PointX="6" PointY="15.625" />
+        <EntityTypeShape EntityType="ShopModel.Supplier" Width="1.5" PointX="6" PointY="18.125" />
         <AssociationConnector Association="ShopModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="ShopModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="ShopModel.FK_CustomerDetails_AspNetUsers" />

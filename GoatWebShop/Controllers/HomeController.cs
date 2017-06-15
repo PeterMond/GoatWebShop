@@ -30,20 +30,20 @@ namespace GoatWebShop.Controllers
 
             if (persoon.Roles.Any())
             {
-                ViewBag.UserRole = persoon.Roles.First();
+                ViewBag.UserRole = persoon.Roles.FirstOrDefault().RoleId;
             }
             
 
-            var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>());
-            string[] roleNames = { "Admin", "Member", "Moderator", "Junior", "Senior", "Customer" };
-            IdentityResult roleResult;
-            foreach (var roleName in roleNames)
-            {
-                if (!RoleManager.RoleExists(roleName))
-                {
-                    roleResult = RoleManager.Create(new IdentityRole(roleName));
-                }
-            }
+            //var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>());
+            //string[] roleNames = { "Admin", "Member", "Moderator", "Junior", "Senior", "Customer" };
+            //IdentityResult roleResult;
+            //foreach (var roleName in roleNames)
+            //{
+            //    if (!RoleManager.RoleExists(roleName))
+            //    {
+            //        roleResult = RoleManager.Create(new IdentityRole(roleName));
+            //    }
+            //}
 
   
 

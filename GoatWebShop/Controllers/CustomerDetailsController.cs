@@ -71,7 +71,6 @@ namespace GoatWebShop.Controllers
                 return View(customerDetail);
             }
             return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-            //return View(customerDetail);
         }
 
         // GET: CustomerDetails/Create
@@ -80,6 +79,17 @@ namespace GoatWebShop.Controllers
             if (IsAdmin())
             {
                 ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email");
+            }
+            else
+            {
+
+                // check if the user already has an account
+                var userId = User.Identity.GetUserId();
+                var customerDetailId = db.CustomerDetails.Where(c => c.UserId.Equals(userId)).Select(c => c.ID).FirstOrDefault();
+                if (customerDetailId != 0)
+                {
+                    return RedirectToAction("Index");
+                }
             }
 
             return View();
@@ -122,12 +132,21 @@ namespace GoatWebShop.Controllers
             {
                 return HttpNotFound();
             }
+
             if (IsAdmin())
             {
                 ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", customerDetail.UserId);
             }
             
-            return View(customerDetail);
+            //return View(customerDetail);
+
+
+            // check if the user is authorised to view this page
+            if (customerDetail.UserId == User.Identity.GetUserId() || IsAdmin())
+            {
+                return View(customerDetail);
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
         }
 
         // POST: CustomerDetails/Edit/5

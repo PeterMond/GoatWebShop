@@ -5,7 +5,25 @@
 
 <h2>@ViewBag.Title.</h2>
 
+
 <p class="text-success">@ViewBag.StatusMessage</p>
+
+
+
+<div>
+    @if (Model.CustomerDetails == null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span><strong>OH SNAP</strong>
+            Currently we dont have your name and shipping address. Click @Html.ActionLink("Here", "Create", "CustomerDetails") to fix this problem!
+        </div>
+    }
+    else
+    {
+        <h3>Hi Welcome @Model.CustomerDetails.FirstName @Model.CustomerDetails.LastName </h3>
+    }
+</div>
 <div>
     <h4>Change your account settings</h4>
     <hr />

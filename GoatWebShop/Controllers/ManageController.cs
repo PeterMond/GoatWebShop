@@ -64,13 +64,19 @@ namespace GoatWebShop.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+            var customerDetail = new ShopEntities().CustomerDetails.Where(c => c.UserId.Equals(userId)).FirstOrDefault();
+            //if (customerDetail != null)
+            //{
+            //    ViewBag.customerFullName = customerDetail.FirstName + " " + customerDetail.LastName;
+            //}
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                CustomerDetails = customerDetail
             };
             return View(model);
         }
