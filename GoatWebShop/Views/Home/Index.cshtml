@@ -26,9 +26,24 @@
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" id="category" name="category">
+                <option value="0">Select an Category to filter</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="sort">Sort</label>
+            <select class="form-control" id="sort" name="sort">
+                <option value="0">Sort the products by</option>
+                <option value="1">Price: Low - High</option>
+                <option value="2">Price: High - Low</option>
+                <option value="3">Name: A - Z</option>
+                <option value="4">Name: Z - A</option>
+                <option value="5">Best Selling</option>
+                <option value="5">Instock (skip empty)</option>
+            </select>
+        </div>
     </div>
 </div>
 
@@ -38,7 +53,7 @@
     </div>
 </div>
 
-<button onclick="getProducts();">products</button>
+@*<button onclick="getProducts();">products</button>*@
 
 @section scripts
 {
@@ -46,46 +61,103 @@
 
         $(document).ready(function() {
             getProducts();
+            getCategories();
         });
 
+        // filters the products by the dropdowns input
+        $("#category").change(function () {
+            var categoryId = $(this).find(':selected').val();
+            if (categoryId == 0 ) {
+                getProducts();
+            }
+            getProductsFromCategory(categoryId);
+        });
+
+        // Sort the products for the customer
+        $("#sort").change(function () {
+            var sortOption = $(this).find(':selected').val();
+            if (sortOption == 0 ) {
+                getProducts();
+            }
+            getSortedProducts(sortOption);
+        });
+
+        // get all the products
         function getProducts() {
             $.ajax({
                 url: 'http://localhost:52626/api/ProductsApi',
                 type: 'GET',
                 success: function (data) {
-                    console.log(data);
-                    $('.products').html('');
-                    for (var i = 0; i < data.length; i++) {
-
-                        console.log(data[i]);
-                        var ProductDiv = $(
-                            '<div class="col-sm-6 col-md-4">' +
-                            '<div class="thumbnail">' +
-                            '<div class="caption">' +
-                            '<h3>' + data[i].Name + '</h3> ' +
-                            '<h2>€ ' + data[i].Price + '<small class="pull-right">' + data[i].Category.Category1 + '</small></h2>' +
-                            '<p>' + ((data[i].Description) ? data[i].Description : "Nothing found!") + '</p><br /><br /> ' +
-                            '<div class="row">' +
-                            '<div class="col-md-8 col-md-offset-4">' +
-                            '<div class="col-md-offset-5">' +
-                            '<p>' + data[i].AmountInStock+ ' left in stock</p>' +
-                            '</div>' +
-                            '<p><a href="#" class="btn btn-primary" role="button">Buy Now</a> <a href="#" class="btn btn-default" role="button">Add to chart</a></p>' +
-                            '</div>'+
-                            '</div>' +
-                            '</div>' +
-                            '</div >' +
-                            '</div >' );
-
-                        if ((i+1) % 3 == 0) {
-                            console.log(i+1);
-                            //ProductDiv.append('bla');
-                        }
-                        $('.products').append(ProductDiv);
-                    }
+                    GenerateHtml(data);
                 }
             });
         }
+
+        // get all the categories and append them to the dropdown
+        function getCategories() {
+            $.ajax({
+                url: 'http://localhost:52626/api/CategoriesApi',
+                type: 'GET',
+                success: function (data) {
+                    $.each(data,function(val, category) {
+                        $('#category').append(
+                            $('<option></option>').val(category.ID).html(category.Category1)
+                        );
+                    });
+                }
+            });
+        }
+
+        // get all the products from selected category
+        function getProductsFromCategory(category) {
+            $.ajax({
+                url: 'http://localhost:52626/api/ProductsApi/GetProductsFromCategory/'+category,
+                type: 'GET',
+                success: function (data) {
+                    GenerateHtml(data);
+                }
+            });
+        };
+
+        // get all the products sorted
+        function getSortedProducts(sortOption) {
+            $.ajax({
+                url: 'http://localhost:52626/api/ProductsApi/GetProductsSorted/'+sortOption,
+                type: 'GET',
+                success: function (data) {
+                    GenerateHtml(data);
+                }
+            });
+        }
+
+        // Create/ generate the needed html for the products
+        function GenerateHtml(data) {
+            $('.products').html('');
+            for (var i = 0; i < data.length; i++) {
+                var ProductDiv = $(
+                    '<div class="col-sm-6 col-md-4">' +
+                    '<div class="thumbnail">' +
+                    '<div class="caption">' +
+                    '<h3>' + data[i].Name + '</h3> ' +
+                    '<h2>€ ' + data[i].Price + '<small class="pull-right">' + data[i].Category.Category1 + '</small></h2>' +
+                    '<p>' + ((data[i].Description) ? data[i].Description : "Nothing found!") + '</p><br /><br /> ' +
+                    '<div class="row">' +
+                    '<div class="col-md-8 col-md-offset-4">' +
+                    '<div class="col-md-offset-5">' +
+                    '<p>' + data[i].AmountInStock+ ' left in stock</p>' +
+                    '</div>' +
+                    '<p><a href="#" class="btn btn-primary" role="button">Buy Now</a> <a href="#" class="btn btn-default" role="button">Add to chart</a></p>' +
+                    '</div>'+
+                    '</div>' +
+                    '</div>' +
+                    '</div >' +
+                    '</div >' );
+                $('.products').append(ProductDiv);
+            }
+        };
+
+
+
 
         function newBike() {
             var bike = {
