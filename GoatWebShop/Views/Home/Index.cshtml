@@ -101,7 +101,7 @@
                 success: function (data) {
                     $.each(data,function(val, category) {
                         $('#category').append(
-                            $('<option></option>').val(category.ID).html(category.Category1)
+                            $('<option></option>').val(category.ID).html(category.Category)
                         );
                     });
                 }
@@ -130,6 +130,18 @@
             });
         }
 
+        // get all the products sorted
+        function getChart() {
+            var guid = "@ViewBag.guid";
+            $.ajax({
+                url: 'http://localhost:52626/api/ChartApi/GetChart/'+guid,
+                type: 'GET',
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+
         // Create/ generate the needed html for the products
         function GenerateHtml(data) {
             $('.products').html('');
@@ -139,14 +151,14 @@
                     '<div class="thumbnail">' +
                     '<div class="caption">' +
                     '<h3>' + data[i].Name + '</h3> ' +
-                    '<h2>€ ' + data[i].Price + '<small class="pull-right">' + data[i].Category.Category1 + '</small></h2>' +
+                    '<h2>€ ' + data[i].Price + '<small class="pull-right">' + data[i].Category.Category + '</small></h2>' +
                     '<p>' + ((data[i].Description) ? data[i].Description : "Nothing found!") + '</p><br /><br /> ' +
                     '<div class="row">' +
                     '<div class="col-md-8 col-md-offset-4">' +
                     '<div class="col-md-offset-5">' +
                     '<p>' + data[i].AmountInStock+ ' left in stock</p>' +
                     '</div>' +
-                    '<p><a href="#" class="btn btn-primary" role="button">Buy Now</a> <a href="#" class="btn btn-default" role="button">Add to chart</a></p>' +
+                    '<p><a href="#" class="btn btn-primary" role="button">Buy Now</a> <a href="#" class="btn btn-default" role="button">Add to chart</a>*<button onclick="getChart();">products</button></p>' +
                     '</div>'+
                     '</div>' +
                     '</div>' +

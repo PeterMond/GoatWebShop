@@ -25,6 +25,7 @@ namespace GoatWebShop.Models
         public System.DateTime Created { get; set; }
         public int OrderStatus_id { get; set; }
         public string UserId { get; set; }
+        public string SessionUserId { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual OrderStatu OrderStatu { get; set; }

@@ -12,6 +12,17 @@ namespace GoatWebShop.Controllers
     {
         public ActionResult Index()
         {
+            if (Session["guid"] != null)
+            {
+                ViewBag.guid = Session["guid"];
+            }
+            else
+            {
+                Guid guid = Guid.NewGuid();
+                Session["guid"] = guid;
+                ViewBag.guid = guid;
+            }
+
             return View();
         }
 
@@ -33,20 +44,6 @@ namespace GoatWebShop.Controllers
                 ViewBag.UserRole = persoon.Roles.FirstOrDefault().RoleId;
             }
             
-
-            //var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>());
-            //string[] roleNames = { "Admin", "Member", "Moderator", "Junior", "Senior", "Customer" };
-            //IdentityResult roleResult;
-            //foreach (var roleName in roleNames)
-            //{
-            //    if (!RoleManager.RoleExists(roleName))
-            //    {
-            //        roleResult = RoleManager.Create(new IdentityRole(roleName));
-            //    }
-            //}
-
-  
-
 
             return View();
         }

@@ -83,7 +83,8 @@
           <Property Name="OrderNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Created" Type="datetime" Nullable="false" />
           <Property Name="OrderStatus_id" Type="int" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="SessionUserId" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="OrderRow">
           <Key>
@@ -194,7 +195,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
@@ -460,7 +461,8 @@
           <Property Name="OrderNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="OrderStatus_id" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SessionUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="ShopModel.FK_Order_AspNetUsers" FromRole="Order" ToRole="AspNetUser" />
           <NavigationProperty Name="OrderStatu" Relationship="ShopModel.FK_Order_OrderStatus" FromRole="Order" ToRole="OrderStatu" />
           <NavigationProperty Name="OrderRows" Relationship="ShopModel.FK_OrderRow_Order" FromRole="Order" ToRole="OrderRow" />
@@ -553,7 +555,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_AspNetUsers">
-          <End Type="ShopModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="ShopModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
           <End Type="ShopModel.Order" Role="Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
@@ -703,6 +705,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="ShopModel.Order">
               <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="SessionUserId" ColumnName="SessionUserId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="OrderStatus_id" ColumnName="OrderStatus_id" />
                 <ScalarProperty Name="Created" ColumnName="Created" />
