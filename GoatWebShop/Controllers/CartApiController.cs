@@ -13,51 +13,51 @@ using Microsoft.AspNet.Identity;
 
 namespace GoatWebShop.Controllers
 {
-    public class ChartApiController : ApiController
+    public class CartApiController : ApiController
     {
         private ShopEntities db = new ShopEntities();
 
         // get the current order or create a new order
-        public Order GetOrCreateOrder(string customerId)
+        public Order GetOrder(string customerId, bool allowCreateNewOrder = false)
         {
             var order = db.Orders.Where(o => o.SessionUserId == customerId).FirstOrDefault();
 
-            if (order != null)
+            if (order == null && allowCreateNewOrder)
             {
-                return order;
+                Order newOrder = new Order
+                {
+                    SessionUserId = customerId,
+                    Created = DateTime.Now,
+                    OrderNumber = "Order-" + DateTime.Now.ToShortDateString(),
+                    OrderStatus_id = 1
+                };
+                db.Orders.Add(newOrder);
+                db.SaveChanges();
+
+                return newOrder;
             }
 
-            Order newOrder = new Order
-            {
-                SessionUserId = customerId,
-                Created = DateTime.Now,
-                OrderNumber = "Order-" + DateTime.Now.ToShortDateString(),
-                OrderStatus_id = 1
-            };
-            db.Orders.Add(newOrder);
-            db.SaveChanges();
-
-            return newOrder;
+            return order;
         }
 
 
-        // GET: api/ChartApi/GetChart/
-        [Route("api/ChartApi/GetChart/{userid}")]
+        // GET: api/CartApi/GetCart/
+        [Route("api/CartApi/GetCart/{userid}")]
         [HttpGet]
-        public IHttpActionResult GetChart(string userId)
+        public IHttpActionResult GetCart(string userId)
         {
-            var chart = db.Orders.Where(o => o.OrderStatu.Status == "Chart").Where(o => o.UserId == userId || o.SessionUserId == userId);
+            var Cart = db.Orders.Where(o => o.OrderStatu.Status == "Cart").Where(o => o.UserId == userId || o.SessionUserId == userId);
 
-            return Ok(chart.First());
+            return Ok(Cart.First());
         }
 
 
-        // GET: api/ChartApi/AddProductToChart/1/1/1 TODO: /{amount}
-        [Route("api/ChartApi/AddProductToChart/{customerid}/{productid}/{amount}")]
+        // GET: api/CartApi/AddProductToCart/1/1/1
+        [Route("api/CartApi/AddProductToCart/{customerid}/{productid}/{amount}")]
         [HttpGet]
-        public IHttpActionResult AddProductToChart(string customerId, int productId, int amount)
+        public IHttpActionResult AddProductToCart(string customerId, int productId, int amount)
         {
-            var order = GetOrCreateOrder(customerId);
+            var order = GetOrder(customerId, true);
 
             var product = db.Products.Find(productId);
 
@@ -92,6 +92,49 @@ namespace GoatWebShop.Controllers
         }
 
 
+        // GET: api/CartApi/RemoveProductFromCart/1/1/
+        [Route("api/CartApi/RemoveProductFromCart/{customerid}/{productid}/")]
+        [HttpGet]
+        public IHttpActionResult RemoveProductFromCart(string customerId, int productId)
+        {
+            var order = GetOrder(customerId);
+
+            var product = db.Products.Find(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            // Check if the order already has the product
+            var orderRow = db.OrderRows.Where(o => o.Order_ID == order.ID && o.Product_ID == productId).FirstOrDefault();
+            if (orderRow != null)
+            {
+                db.OrderRows.Remove(orderRow);
+                db.SaveChanges();
+            }
+
+            return Ok();
+        }
+
+
+        // GET: api/CartApi/DeleteCart/1/
+        [Route("api/CartApi/DeleteCart/{customerid}")]
+        [HttpGet]
+        public IHttpActionResult DeleteCart(string customerId)
+        {
+            var order = GetOrder(customerId);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            db.Orders.Remove(order);
+            db.SaveChanges();
+
+            return Ok();
+        }
 
 
 
@@ -102,13 +145,14 @@ namespace GoatWebShop.Controllers
 
 
 
-        // GET: api/ChartApi
+
+        // GET: api/CartApi
         public IQueryable<Order> GetOrders()
         {
             return db.Orders;
         }
 
-        // GET: api/ChartApi/5
+        // GET: api/CartApi/5
         [ResponseType(typeof(Order))]
         public IHttpActionResult GetOrder(int id)
         {
@@ -121,7 +165,7 @@ namespace GoatWebShop.Controllers
             return Ok(order);
         }
 
-        // PUT: api/ChartApi/5
+        // PUT: api/CartApi/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutOrder(int id, Order order)
         {
@@ -156,7 +200,7 @@ namespace GoatWebShop.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/ChartApi
+        // POST: api/CartApi
         [ResponseType(typeof(Order))]
         public IHttpActionResult PostOrder(Order order)
         {
@@ -171,7 +215,7 @@ namespace GoatWebShop.Controllers
             return CreatedAtRoute("DefaultApi", new { id = order.ID }, order);
         }
 
-        // DELETE: api/ChartApi/5
+        // DELETE: api/CartApi/5
         [ResponseType(typeof(Order))]
         public IHttpActionResult DeleteOrder(int id)
         {

@@ -7,7 +7,7 @@ using GoatWebShop.Models;
 
 namespace GoatWebShop.Controllers
 {
-    public class ChartController : Controller
+    public class CartController : Controller
     {
         private ShopEntities db = new ShopEntities();
 

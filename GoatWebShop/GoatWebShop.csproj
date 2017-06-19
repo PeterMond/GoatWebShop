@@ -204,8 +204,8 @@
     <Compile Include="Controllers\AspNetRolesController.cs" />
     <Compile Include="Controllers\CategoriesApiController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
-    <Compile Include="Controllers\ChartApiController.cs" />
-    <Compile Include="Controllers\ChartController.cs" />
+    <Compile Include="Controllers\CartApiController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CustomerDetailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />

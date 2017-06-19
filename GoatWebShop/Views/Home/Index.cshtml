@@ -46,13 +46,7 @@
         </div>
     </div>
 </div>
-<div class="row">
-<div class="col-md-2">
-    <div class="input-group">
-        <input type="text" class="form-control">
-    </div>
-</div>
-</div>
+
 
 <div class="row">
     <div class="products">
@@ -91,7 +85,7 @@
         // get all the products
         function getProducts() {
             $.ajax({
-                url: 'http://localhost:52626/api/ProductsApi',
+                url: '/api/ProductsApi',
                 type: 'GET',
                 success: function (data) {
                     GenerateHtml(data);
@@ -102,7 +96,7 @@
         // get all the categories and append them to the dropdown
         function getCategories() {
             $.ajax({
-                url: 'http://localhost:52626/api/CategoriesApi',
+                url: '/api/CategoriesApi',
                 type: 'GET',
                 success: function (data) {
                     $.each(data,function(val, category) {
@@ -117,7 +111,7 @@
         // get all the products from selected category
         function getProductsFromCategory(category) {
             $.ajax({
-                url: 'http://localhost:52626/api/ProductsApi/GetProductsFromCategory/'+category,
+                url: '/api/ProductsApi/GetProductsFromCategory/'+category,
                 type: 'GET',
                 success: function (data) {
                     GenerateHtml(data);
@@ -128,7 +122,7 @@
         // get all the products sorted
         function getSortedProducts(sortOption) {
             $.ajax({
-                url: 'http://localhost:52626/api/ProductsApi/GetProductsSorted/'+sortOption,
+                url: '/api/ProductsApi/GetProductsSorted/'+sortOption,
                 type: 'GET',
                 success: function (data) {
                     GenerateHtml(data);
@@ -137,10 +131,10 @@
         }
 
         // get all the products sorted
-        function getChart() {
+        function getCart() {
             var guid = "@ViewBag.guid";
             $.ajax({
-                url: 'http://localhost:52626/api/ChartApi/GetChart/'+guid,
+                url: '/api/CartApi/GetCart/'+guid,
                 type: 'GET',
                 success: function (data) {
                     console.log(data);
@@ -153,7 +147,7 @@
             $('.products').html('');
             for (var i = 0; i < data.length; i++) {
                 var ProductDiv = $(
-                    '<div class="col-sm-6 col-md-4">' +
+                    '<div class="col-sm-6 col-md-4 product' + data[i].ID +'">' +
                     '<div class="thumbnail">' +
                     '<div class="caption">' +
                     '<h3>' + data[i].Name + '</h3> ' +
@@ -168,7 +162,7 @@
                     '<div class="input-group ">' +
                     '<input type="text" class="form-control amount" value="1">' +
                     '<span class="input-group-btn">' +
-                    '<button class="btn btn-primary tochart" value="' + data[i].ID + '" id="product' + data[i].ID +' " type="button">Add to chart</button>' +
+                    '<button class="btn btn-primary toCart" value="' + data[i].ID + '" id="product' + data[i].ID +' " type="button">Add to Cart</button>' +
                     '</span>' +
                     '</div>' +
                     '</div></p>' +
@@ -181,22 +175,24 @@
             }
         };
 
-        // get the product and the amount to add the product to the chart
-        $(".products").on("click", ".tochart", function () {
+        // get the product and the amount to add the product to the Cart
+        $(".products").on("click", ".toCart", function () {
             var productid = this.value;
             var amount = $(this).parentsUntil('.buyproduct').find('.amount').val();
 
-            AddToChart(productid, amount);
+            AddToCart(productid, amount);
         });
 
 
         // get all the products from selected category
-        function AddToChart(productId, amount) {
+        function AddToCart(productId, amount) {
             $.ajax({
-                url: 'http://localhost:52626/api/ChartApi/AddProductToChart/@ViewBag.guid/' + productId + '/' + amount,
+                url: '/api/CartApi/AddProductToCart/@ViewBag.guid/' + productId + '/' + amount,
                 type: 'GET',
                 success: function () {
                     console.log("yay het is gelukt");
+                    var productName = $('.product' + productId).find("h3").html();
+                    alert('we added "' + productName + '" x ' + amount + ', to your shopping Cart');
                 }
                 //error: function(xhr, status, error) {
                 //    var err = eval("(" + xhr.responseText + ")");
