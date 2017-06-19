@@ -11,26 +11,14 @@
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
         <div class="form-group">
             <label for="category">Category</label>
             <select class="form-control" id="category" name="category">
                 <option value="0">Select an Category to filter</option>
             </select>
         </div>
+    </div>
+    <div class="col-md-4">
         <div class="form-group">
             <label for="sort">Sort</label>
             <select class="form-control" id="sort" name="sort">
@@ -40,12 +28,31 @@
                 <option value="3">Name: A - Z</option>
                 <option value="4">Name: Z - A</option>
                 <option value="5">Best Selling</option>
-                <option value="5">Instock (skip empty)</option>
+                <option value="6">Instock (skip empty)</option>
             </select>
         </div>
     </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Product is added to cart!</h4>
+            </div>
+            <div class="modal-body">
+                <p></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="location.href = '/cart'">To Cart!</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="row">
     <div class="products">
@@ -149,7 +156,7 @@
                     '<div class="input-group ">' +
                     '<input type="text" class="form-control amount" value="1">' +
                     '<span class="input-group-btn">' +
-                    '<button class="btn btn-primary toCart" value="' + data[i].ID + '" id="product' + data[i].ID +' " type="button">Add to Cart</button>' +
+                    '<button class="btn btn-primary toCart"   value="' + data[i].ID + '" id="product' + data[i].ID +' " type="button">Add to Cart</button>' +
                     '</span>' +
                     '</div>' +
                     '</div></p>' +
@@ -179,7 +186,14 @@
                 success: function () {
                     console.log("yay het is gelukt");
                     var productName = $('.product' + productId).find("h3").html();
-                    alert('we added "' + productName + '" x ' + amount + ', to your shopping Cart');
+                    //alert('we added "' + productName + '" x ' + amount + ', to your shopping Cart');
+
+
+                    $('.modal-body').html('');
+                    $('.modal-body').append('<p>We have added: "' + productName + ' ( ' + amount + 'x ) , to your shopping Cart</p>');
+
+                    $("#myModal").modal();
+
                 }
                 //error: function(xhr, status, error) {
                 //    var err = eval("(" + xhr.responseText + ")");

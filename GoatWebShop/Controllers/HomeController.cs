@@ -30,21 +30,6 @@ namespace GoatWebShop.Controllers
         {
             ViewBag.Message = "Your application description page.";
 
-            ViewBag.UserId = User.Identity.GetUserId();
-
-            ViewBag.UserName = User.Identity.GetUserName();
-
-            var UserManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
-
-            var persoon = UserManager.FindByEmail("test@test.nl");
-            ViewBag.UserName2 = persoon.UserName;
-
-            if (persoon.Roles.Any())
-            {
-                ViewBag.UserRole = persoon.Roles.FirstOrDefault().RoleId;
-            }
-            
-
             return View();
         }
 

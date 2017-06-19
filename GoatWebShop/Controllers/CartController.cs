@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using GoatWebShop.Models;
+using Microsoft.AspNet.Identity;
 
 namespace GoatWebShop.Controllers
 {
@@ -26,10 +28,26 @@ namespace GoatWebShop.Controllers
                 ViewBag.guid = guid;
             }
 
-            //var userId = guid;
-            //var chart = db.Orders.Where(o => o.OrderStatu.Status == "Chart").Where(o => o.UserId == userId || o.SessionUserId == userId);
-
             return View();
+        }
+
+        [Authorize]
+        public ActionResult CheckOut()
+        {
+            var userId = User.Identity.GetUserId();
+            var sessionUserID = Session["guid"].ToString();
+            var orders = db.Orders.Where(o => o.SessionUserId == sessionUserID).FirstOrDefault();
+
+            if (orders != null)
+            {
+                orders.OrderStatus_id = 2;
+                orders.UserId = userId;
+                db.SaveChanges();
+
+                return Redirect("/myorders");
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

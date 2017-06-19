@@ -22,6 +22,19 @@
         <tfoot id="cartitems-footer"></tfoot>
     </table>
     <div class="noProducts"></div>
+    
+@if (Request.IsAuthenticated)
+{
+    <div class="payLink">
+        @Html.ActionLink("Click her to Pay", "CheckOut", "Cart")
+    </div>
+}
+else
+{
+    <div>
+        <p>Login to proceed with the payment </p>
+    </div>
+}
 </div>
 
 
@@ -44,6 +57,7 @@
                     }
                     else {
                         $('.noProducts').append('<h2>There are no products in your chart!</h2>');
+                        $('.payLink').html('');
                     }
                 }
             });

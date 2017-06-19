@@ -1,0 +1,48 @@
+﻿@model IEnumerable<GoatWebShop.Models.Order>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderStatu.Status)
+        </th>
+        <th>
+            Amount of products
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderStatu.Status)
+        </td>
+        <td>
+            @item.OrderRows.Count()
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) 
+        </td>
+    </tr>
+
+    
+}
+
+</table>
