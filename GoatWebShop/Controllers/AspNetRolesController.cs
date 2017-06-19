@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace GoatWebShop.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AspNetRolesController : Controller
     {
         private ShopEntities db = new ShopEntities();

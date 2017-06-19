@@ -9,7 +9,6 @@
     @*<p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
 </div>
 
-
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
@@ -126,18 +125,6 @@
                 type: 'GET',
                 success: function (data) {
                     GenerateHtml(data);
-                }
-            });
-        }
-
-        // get all the products sorted
-        function getCart() {
-            var guid = "@ViewBag.guid";
-            $.ajax({
-                url: '/api/CartApi/GetCart/'+guid,
-                type: 'GET',
-                success: function (data) {
-                    console.log(data);
                 }
             });
         }

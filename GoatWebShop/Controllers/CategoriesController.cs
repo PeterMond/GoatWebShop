@@ -10,7 +10,7 @@ using GoatWebShop.Models;
 
 namespace GoatWebShop.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class CategoriesController : Controller
     {
         private ShopEntities db = new ShopEntities();

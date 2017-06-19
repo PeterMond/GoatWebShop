@@ -270,6 +270,7 @@
     <Compile Include="PartialClasses\Category.cs" />
     <Compile Include="PartialClasses\CustomerDetail.Partial.cs" />
     <Compile Include="PartialClasses\Order.cs" />
+    <Compile Include="PartialClasses\OrderRow.cs" />
     <Compile Include="PartialClasses\Product.cs" />
     <Compile Include="PartialClasses\Supplier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -379,6 +380,7 @@
     <Content Include="Views\Orders\Details.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

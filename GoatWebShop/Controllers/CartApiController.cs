@@ -46,9 +46,9 @@ namespace GoatWebShop.Controllers
         [HttpGet]
         public IHttpActionResult GetCart(string userId)
         {
-            var Cart = db.Orders.Where(o => o.OrderStatu.Status == "Cart").Where(o => o.UserId == userId || o.SessionUserId == userId);
+            var Cart = db.Orders.Where(o => o.OrderStatu.Status == "Cart").Where(o => o.UserId == userId || o.SessionUserId == userId).FirstOrDefault();
 
-            return Ok(Cart.First());
+            return Ok(Cart);
         }
 
 

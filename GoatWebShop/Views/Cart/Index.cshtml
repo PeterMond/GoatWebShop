@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<br/><br/>
+<div class="products">
+    <h2>My Shopping Cart</h2>
+    <br/><br/>
+    <table class="table" id="cartitems">
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Amount</th>
+            <th>Price</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody id="cartitems-body">
+           
+        </tbody>
+        <tfoot id="cartitems-footer"></tfoot>
+    </table>
+    <div class="noProducts"></div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            getCart();
+        });
+
+        // get all the items from the cart
+        function getCart() {
+            $.ajax({
+                url: '/api/CartApi/GetCart/@ViewBag.guid',
+                type: 'GET',
+                success: function(data) {
+                    if (data != null) {
+                        GenerateHTML(data);
+                    }
+                    else {
+                        $('.noProducts').append('<h2>There are no products in your chart!</h2>');
+                    }
+                }
+            });
+        }
+
+
+        // get the product and the amount to add the product to the Cart
+        $(".products").on("click", ".deleteItem", function () {
+            var productid = this.value;
+            deleteItemFromCart(productid);
+        });
+
+        // delete an item from the chart
+        function deleteItemFromCart(productid) {
+            $.ajax({
+                url: '/api/CartApi/RemoveProductFromCart/@ViewBag.guid/' + productid,
+                type: 'GET',
+                success: function (data) {
+                    getCart();
+                }
+            });
+        }
+
+
+
+        function GenerateHTML(data) {
+            var totalProducts = 0;
+            var totalPrice = 0;
+            $('#cartitems-body').html('');
+            $('#cartitems-footer').html('');
+
+            $.each(data.OrderRows, function(key, value) {
+                $('#cartitems-body').append(
+                    '<tr>' +
+                    '<td> ' + value.Product.Name + '</td > ' +
+                    '<td> ' + value.Amount + '</td>' +
+                    '<td> € ' + value.Price + '</td>' +
+                    '<td><button class="btn btn-primary deleteItem" value="' + value.Product.ID + '" id="product' + value.Product.ID + ' " type="button">Remove from Cart</button></td>' +
+                    '</tr>'
+                );
+                totalProducts += value.Amount;
+                totalPrice += value.Price;
+            });
+                      
+            $('#cartitems-footer').append(
+                '<tr>' +
+                '<td><strong>Total</strong></td >' +
+                '<td> ' + totalProducts + '</td > ' +
+                '<td> € ' + totalPrice + '</td>' +
+                '<td><button class="btn btn-primary" disabled type="button">Checkout</button></td>' +
+                '</tr>'
+            );
+        }
+    </script>
+}

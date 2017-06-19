@@ -37,6 +37,7 @@ namespace GoatWebShop.Models
         [JsonIgnore]
         public virtual OrderStatu OrderStatu { get; set; }
 
+        //[JsonIgnore]
         public virtual ICollection<OrderRow> OrderRows { get; set; }
     }
 }

@@ -15,8 +15,19 @@ namespace GoatWebShop.Controllers
         // GET: Chart
         public ActionResult Index()
         {
-            var userId = "test";
-            var chart = db.Orders.Where(o => o.OrderStatu.Status == "Chart").Where(o => o.UserId == userId || o.SessionUserId == userId);
+            if (Session["guid"] != null)
+            {
+                ViewBag.guid = Session["guid"];
+            }
+            else
+            {
+                Guid guid = Guid.NewGuid();
+                Session["guid"] = guid;
+                ViewBag.guid = guid;
+            }
+
+            //var userId = guid;
+            //var chart = db.Orders.Where(o => o.OrderStatu.Status == "Chart").Where(o => o.UserId == userId || o.SessionUserId == userId);
 
             return View();
         }
