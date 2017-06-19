@@ -46,6 +46,13 @@
         </div>
     </div>
 </div>
+<div class="row">
+<div class="col-md-2">
+    <div class="input-group">
+        <input type="text" class="form-control">
+    </div>
+</div>
+</div>
 
 <div class="row">
     <div class="products">
@@ -53,7 +60,6 @@
     </div>
 </div>
 
-@*<button onclick="getProducts();">products</button>*@
 
 @section scripts
 {
@@ -154,39 +160,51 @@
                     '<h2>€ ' + data[i].Price + '<small class="pull-right">' + data[i].Category.Category + '</small></h2>' +
                     '<p>' + ((data[i].Description) ? data[i].Description : "Nothing found!") + '</p><br /><br /> ' +
                     '<div class="row">' +
-                    '<div class="col-md-8 col-md-offset-4">' +
-                    '<div class="col-md-offset-5">' +
+                    '<div class="col-md-7 col-md-offset-5">' +
+                    '<div class="col-md-offset-4">' +
                     '<p>' + data[i].AmountInStock+ ' left in stock</p>' +
                     '</div>' +
-                    '<p><a href="#" class="btn btn-primary" role="button">Buy Now</a> <a href="#" class="btn btn-default" role="button">Add to chart</a>*<button onclick="getChart();">products</button></p>' +
+                    '<p><div class="col-md-12 buyproduct">' +
+                    '<div class="input-group ">' +
+                    '<input type="text" class="form-control amount" value="1">' +
+                    '<span class="input-group-btn">' +
+                    '<button class="btn btn-primary tochart" value="' + data[i].ID + '" id="product' + data[i].ID +' " type="button">Add to chart</button>' +
+                    '</span>' +
+                    '</div>' +
+                    '</div></p>' +
                     '</div>'+
                     '</div>' +
-                    '</div>' +
+                    '</div><br/>' +
                     '</div >' +
                     '</div >' );
                 $('.products').append(ProductDiv);
             }
         };
 
+        // get the product and the amount to add the product to the chart
+        $(".products").on("click", ".tochart", function () {
+            var productid = this.value;
+            var amount = $(this).parentsUntil('.buyproduct').find('.amount').val();
+
+            AddToChart(productid, amount);
+        });
 
 
-
-        function newBike() {
-            var bike = {
-                Type: 0,
-                RegistrationNumber: 80,
-                PersonId: 1
-            };
-
+        // get all the products from selected category
+        function AddToChart(productId, amount) {
             $.ajax({
-                url: 'http://localhost:54773/api/bikesAPI/',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(bike),
-                succes: getData()
+                url: 'http://localhost:52626/api/ChartApi/AddProductToChart/@ViewBag.guid/' + productId + '/' + amount,
+                type: 'GET',
+                success: function () {
+                    console.log("yay het is gelukt");
+                }
+                //error: function(xhr, status, error) {
+                //    var err = eval("(" + xhr.responseText + ")");
+                //    alert(err.Message);
+                //}
             });
+        };
 
-        }
     </script>
 
 }

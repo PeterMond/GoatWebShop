@@ -21,13 +21,13 @@ namespace GoatWebShop.Models
         }
     
         public int ID { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public decimal Price { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public byte[] Photo { get; set; }
         public int AmountInStock { get; set; }
-        public Nullable<int> Category_ID { get; set; }
-        public Nullable<int> Supplier_ID { get; set; }
+        public int Category_ID { get; set; }
+        public int Supplier_ID { get; set; }
         public Nullable<System.DateTime> Deleted { get; set; }
     
         public virtual Category Category { get; set; }

@@ -17,23 +17,7 @@ namespace GoatWebShop.Controllers
     {
         private ShopEntities db = new ShopEntities();
 
-        public string GetUserId()
-        {
-            // werkt niet
-            var userId = "";
-            if (false)
-            {
-                userId = User.Identity.GetUserId();
-            }
-            else
-            {
-                userId = "64e11db9-ec5f-4549-a95d-7bef312536cb";
-            }
-            
-            return userId;
-        }
-
-
+        // get the current order or create a new order
         public Order GetOrCreateOrder(string customerId)
         {
             var order = db.Orders.Where(o => o.SessionUserId == customerId).FirstOrDefault();
@@ -43,7 +27,13 @@ namespace GoatWebShop.Controllers
                 return order;
             }
 
-            Order newOrder = new Order { SessionUserId = customerId, Created = DateTime.Now};
+            Order newOrder = new Order
+            {
+                SessionUserId = customerId,
+                Created = DateTime.Now,
+                OrderNumber = "Order-" + DateTime.Now.ToShortDateString(),
+                OrderStatus_id = 1
+            };
             db.Orders.Add(newOrder);
             db.SaveChanges();
 
@@ -56,40 +46,54 @@ namespace GoatWebShop.Controllers
         [HttpGet]
         public IHttpActionResult GetChart(string userId)
         {
-            //Guid tempCartId = Guid.NewGuid();
-            userId = GetUserId();
             var chart = db.Orders.Where(o => o.OrderStatu.Status == "Chart").Where(o => o.UserId == userId || o.SessionUserId == userId);
 
             return Ok(chart.First());
         }
 
 
-        // GET: api/ChartApi/AddProductToChart/1/1
-        [Route("api/ChartApi/AddProductToChart/{customerid}/{productid}")]
+        // GET: api/ChartApi/AddProductToChart/1/1/1 TODO: /{amount}
+        [Route("api/ChartApi/AddProductToChart/{customerid}/{productid}/{amount}")]
         [HttpGet]
-        public IHttpActionResult AddProductToChart(string customerId, int productId)
+        public IHttpActionResult AddProductToChart(string customerId, int productId, int amount)
         {
             var order = GetOrCreateOrder(customerId);
 
             var product = db.Products.Find(productId);
 
-            if (product != null)
+            if (product == null)
             {
-                var orderRow = new OrderRow
-                {
-                    Order_ID = order.ID,
-                    Product_ID = productId, 
-                    Amount = 1,
-                    //Price = product.Price;
-                };
-                db.OrderRows.Add(orderRow);
-                db.SaveChanges();
-
-                return Ok();
+                return NotFound();
             }
 
-            return NotFound();
+            // Check if the order already has the product
+            var orderRow = db.OrderRows.Where(o => o.Order_ID == order.ID && o.Product_ID == productId).FirstOrDefault();
+            if (orderRow != null)
+            {
+                orderRow.Amount += amount;
+                orderRow.Price += (product.Price * amount);
+            }
+            else
+            {
+                orderRow = new OrderRow
+                {
+                    Order_ID = order.ID,
+                    Product_ID = productId,
+                    Amount = amount,
+                    Price = (product.Price * amount)
+                };
+
+                db.OrderRows.Add(orderRow);
+            }
+            db.SaveChanges();
+
+            return Ok();
+
         }
+
+
+
+
 
 
 
