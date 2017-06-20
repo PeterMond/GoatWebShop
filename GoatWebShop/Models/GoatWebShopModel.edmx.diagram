@@ -5,17 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="2080ef7bd1ff446e8e091ad67b4faaef" Name="Diagram1">
-        <EntityTypeShape EntityType="ShopModel.AspNetRole" Width="1.5" PointX="0.75" PointY="6.125" />
-        <EntityTypeShape EntityType="ShopModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="3.125" />
-        <EntityTypeShape EntityType="ShopModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="12.5" />
-        <EntityTypeShape EntityType="ShopModel.AspNetUser" Width="1.5" PointX="3" PointY="4.75" />
-        <EntityTypeShape EntityType="ShopModel.Category" Width="1.5" PointX="6" PointY="18.375" />
-        <EntityTypeShape EntityType="ShopModel.CustomerDetail" Width="1.5" PointX="5.25" PointY="9.375" />
-        <EntityTypeShape EntityType="ShopModel.Order" Width="1.5" PointX="8.25" PointY="5.625" />
-        <EntityTypeShape EntityType="ShopModel.OrderRow" Width="1.5" PointX="10.5" PointY="5.875" />
-        <EntityTypeShape EntityType="ShopModel.OrderStatu" Width="1.5" PointX="6" PointY="6.125" />
-        <EntityTypeShape EntityType="ShopModel.Product" Width="1.5" PointX="8.25" PointY="16.25" />
-        <EntityTypeShape EntityType="ShopModel.Supplier" Width="1.5" PointX="6" PointY="15.75" />
+        <EntityTypeShape EntityType="ShopModel.AspNetRole" PointX="0.75" PointY="6.125" Width="1.5" />
+        <EntityTypeShape EntityType="ShopModel.AspNetUserClaim" PointX="5.25" PointY="3.125" Width="1.5" />
+        <EntityTypeShape EntityType="ShopModel.AspNetUserLogin" PointX="5.25" PointY="12.5" Width="1.5" />
+        <EntityTypeShape EntityType="ShopModel.AspNetUser" PointX="3" PointY="4.75" Width="1.5" />
+        <EntityTypeShape EntityType="ShopModel.Category" PointX="6" PointY="18.375" Width="1.5" />
+        <EntityTypeShape EntityType="ShopModel.CustomerDetail" PointX="5.25" PointY="9.375" Width="1.5" />
+        <EntityTypeShape EntityType="ShopModel.Order" PointX="8.25" PointY="5.625" Width="1.5" />
+        <EntityTypeShape EntityType="ShopModel.OrderRow" PointX="10.5" PointY="5.875" Width="1.5" />
+        <EntityTypeShape EntityType="ShopModel.OrderStatu" PointX="6" PointY="6.125" Width="1.5" />
+        <EntityTypeShape EntityType="ShopModel.Product" PointX="8.25" PointY="16.25" Width="1.5" />
+        <EntityTypeShape EntityType="ShopModel.Supplier" PointX="6" PointY="15.75" Width="1.5" />
         <AssociationConnector Association="ShopModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="ShopModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="ShopModel.FK_CustomerDetails_AspNetUsers" />
